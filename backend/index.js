@@ -1,10 +1,16 @@
 import express from "express";
 import auth from "./routes/auth.js";
 import cors from "cors";
+import mongoose from "mongoose";
+import "dotenv/config";
 
 const app = express();
 
 app.use(cors());
+app.use(express.json());
+
+// TODO: remove await (?)
+await mongoose.connect(process.env.MONGODB_CONNECTION_URL);
 
 app.use("/api/auth", auth);
 

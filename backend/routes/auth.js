@@ -1,11 +1,41 @@
 import express from "express";
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+
+import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
-router.post("/register", (req, res) => {
+router.post("/register",
+    [
+        body("name", "Enter a valid name").isLength({ min: 3 }),
+        body("email", "Enter a valid email").isEmail(),
+        body("password", "Password must be atleast 4 characters").isLength({ min: 4 }),
+    ],
+    async (req, res) => {
 
-    res.send("Register Route");
+        const errors = validationResult(req);
 
-})
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        try {
+
+            const { name, email, password } = req.body;
+
+            let salt = await bcrypt.genSalt(10);
+
+            const secPass = await bcrypt.hash(password, salt);
+            const userDoc = await User.create({ name, email, password: secPass });
+
+            res.json(userDoc);
+
+        } catch (e) {
+            res.status(400).json({ e });
+        }
+
+
+    })
 
 export default router;

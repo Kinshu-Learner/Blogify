@@ -4,22 +4,39 @@ import axios from 'axios';
 
 const Register = () => {
 
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleRegister = async (e) => {
+
         e.preventDefault();
-        await axios.post('http://localhost:7000/api/auth/register', {
-            email: JSON.stringify(email),
-            password: JSON.stringify(password)
-        },
-            {
+
+        try {
+
+            const response = await axios.post('http://localhost:7000/api/auth/register', {
+                name: name,
+                email: email,
+                password: password
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+            });
+
+            if (!response.status === 200) {
+                alert("Registration failed");
+            }
+            else {
+                alert("Registration successful");
             }
 
-        )
+        } catch (error) {
+            console.log(error);
+            alert("Registration failed due to an error");
+        }
+
+
     }
 
     return (
@@ -32,6 +49,22 @@ const Register = () => {
                 <div className="text-3xl font-bold">Register</div>
 
                 <div className="w-full flex flex-col gap-5">
+
+                    <label>
+                        <div className="text-sm font-semibold w-full">
+                            Name:
+                        </div>
+                        <input type="text"
+                            required
+                            className='focus:outline-none border border-violet-200 focus:border-blue-600 rounded-md px-2 py-1 w-full'
+                            placeholder='John Doe'
+                            value={name}
+                            minLength={3}
+                            onChange={(e) => {
+                                setName(e.target.value)
+                            }}
+                        />
+                    </label>
 
                     <label>
                         <div className="text-sm font-semibold w-full">
@@ -58,6 +91,7 @@ const Register = () => {
                             className=' focus:outline-none border border-violet-200 focus:border-blue-600 rounded-md px-2 py-1 w-full'
                             placeholder='password123'
                             value={password}
+                            minLength={4}
                             onChange={(e) => {
                                 setPassword(e.target.value)
                             }}

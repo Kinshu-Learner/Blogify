@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import { body, validationResult } from "express-validator";
 
@@ -36,6 +37,40 @@ router.post("/register",
         }
 
 
-    })
+    }
+);
+
+router.post("/login", [
+    body("email", "Enter a valid email").isEmail(),
+    body("password", "Password cannot be blank").exists()
+],
+    async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        try {
+            const { email, password } = req.body;
+
+            const user = await User.findOne({ email });
+            if (!user) {
+                res.status(400).json({ error: "Invalid Credentials" });
+            }
+
+            const passwordCompare = await bcrypt.compare(password, user.password);
+            if (!passwordCompare) {
+                return res.status(400).json({ error: "Invalid Credentials" });
+            }
+
+            const authtoken = jwt.sign({ Id: user._id }, process.env.JWT_SECRET);
+
+            res.cookie("authToken", authtoken).json("ok");
+        } catch (e) {
+            res.status(400).json({ e });
+        }
+    }
+)
 
 export default router;

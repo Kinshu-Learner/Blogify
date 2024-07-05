@@ -24,7 +24,7 @@ const Register = () => {
                 },
             });
 
-            if (!response.status === 200) {
+            if (response.status !== 200) {
                 alert("Registration failed");
             }
             else {
@@ -86,7 +86,7 @@ const Register = () => {
                             Password:
                         </div>
                         <input
-                            type="text"
+                            type="password"
                             required
                             className=' focus:outline-none border border-violet-200 focus:border-blue-600 rounded-md px-2 py-1 w-full'
                             placeholder='password123'

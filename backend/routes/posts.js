@@ -35,4 +35,25 @@ router.get("/:id", async (req, res) => {
     res.json(postDoc);
 });
 
+router.put("/:id", verifyToken, async (req, res) => {
+    const { id } = req.params;
+    const { title, summary, content } = req.body;
+
+    const postDoc = await Post.findById(id);
+
+    const isAuthor = postDoc.author.toString() === req.Id.toString();
+
+    if (!isAuthor) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    postDoc.title = title;
+    postDoc.summary = summary;
+    postDoc.content = content;
+
+    await postDoc.save();
+
+    res.json(postDoc);
+});
+
 export default router;

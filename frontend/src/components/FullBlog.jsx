@@ -5,6 +5,7 @@ import { FaRegEdit } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom';
 import Loader from './Loader';
 import { UserContext } from '../contexts/UserContext';
+import 'react-quill/dist/quill.snow.css';
 
 const FullBlog = () => {
 
@@ -45,7 +46,7 @@ const FullBlog = () => {
                         </span>
                     </div>
 
-                    {userInfo.Id === blogInfo.author._id &&
+                    {(userInfo.Id === blogInfo.author._id || userInfo._id === blogInfo.author._id) &&
                         <Link to={`/edit/${id}`}
                             className="flex mt-2 items-center rounded-md hover:cursor-pointer bg-gray-700 text-white w-fit px-6 py-2 gap-3 hover:bg-gray-500 duration-200">
                             Edit Blog
@@ -54,7 +55,7 @@ const FullBlog = () => {
 
                 </div>
 
-                <div className="" dangerouslySetInnerHTML={{ __html: blogInfo.content }}></div>
+                <div dangerouslySetInnerHTML={{ __html: blogInfo.content }}></div>
             </div>
 
         </div>

@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import FullBlog from './components/FullBlog';
 import { UserContextProvider } from './contexts/UserContext';
 import CreatePost from './pages/CreatePost';
+import EditBlog from './pages/EditBlog';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/create" element={<CreatePost />} />
               <Route path="/blog/:id" element={<FullBlog />} />
+              <Route path="/edit/:id" element={<EditBlog />} />
             </Routes>
           </div>
 

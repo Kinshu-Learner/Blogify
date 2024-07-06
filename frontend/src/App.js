@@ -14,13 +14,13 @@ function App() {
 
         <Navbar />
         <div className="flex w-full justify-center">
-          <div className="flex max-w-screen-lg w-full py-6 px-3">
+          <div className="flex max-w-screen-lg w-full py-10 px-3">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/blog/:blogId" element={<FullBlog />} />
               <Route path="/create" element={<CreatePost />} />
+              <Route path="/blog/:id" element={<FullBlog />} />
             </Routes>
           </div>
 

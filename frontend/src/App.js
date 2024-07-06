@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Register from './pages/Register';
 import FullBlog from './components/FullBlog';
 import { UserContextProvider } from './contexts/UserContext';
+import CreatePost from './pages/CreatePost';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/blog/:blogId" element={<FullBlog />} />
+              <Route path="/create" element={<CreatePost />} />
             </Routes>
           </div>
 

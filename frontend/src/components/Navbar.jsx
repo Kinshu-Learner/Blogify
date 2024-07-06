@@ -11,33 +11,31 @@ const Navbar = () => {
     useEffect(() => {
 
         const fetchProfile = async () => {
-            const response = await axios.get('http://localhost:7000/api/auth/profile',
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+            try {
+                const response = await axios.get('http://localhost:7000/api/auth/profile', {
                     withCredentials: true
-                }
-            );
+                });
 
-            if (response) {
-                setUserInfo(response.data)
+                if (response.status === 200) {
+                    setUserInfo(response.data);
+                }
+            } catch (error) {
+                setUserInfo({});
             }
+
         }
+
         fetchProfile();
 
     }, [])
 
     const logout = async () => {
-        const response = await axios.post('http://localhost:7000/api/auth/logout',
+        await axios.post('http://localhost:7000/api/auth/logout', {},
             {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 withCredentials: true
             }
         );
-        setUserInfo(null);
+        setUserInfo({});
     }
 
     const userName = userInfo?.name;

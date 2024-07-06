@@ -90,7 +90,7 @@ router.get("/profile", verifyToken, async (req, res) => {
 })
 
 router.post("/logout", (req, res) => {
-    res.cookie('authToken', '').json("ok");
+    res.cookie('authToken', '', { expires: new Date(0) }).json("ok");
 });
 
 export default router;

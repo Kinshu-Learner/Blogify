@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { body, validationResult } from "express-validator";
+import verifyToken from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -66,11 +67,30 @@ router.post("/login", [
 
             const authtoken = jwt.sign({ Id: user._id }, process.env.JWT_SECRET);
 
-            res.cookie("authToken", authtoken).json("ok");
+            res.cookie("authToken", authtoken).json({
+                Id: user._id,
+                name: user.name,
+            });
         } catch (e) {
             res.status(400).json({ e });
         }
     }
 )
+
+router.get("/profile", verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.Id).select("-password");
+        if (!user) {
+            return res.status(400).json({ error: "No user found" });
+        }
+        res.json(user);
+    } catch (e) {
+        res.status(400).json({ e });
+    }
+})
+
+router.post("/logout", (req, res) => {
+    res.cookie('authToken', '').json("ok");
+});
 
 export default router;

@@ -36,7 +36,6 @@ const Register = () => {
             alert("Registration failed due to an error");
         }
 
-
     }
 
     return (

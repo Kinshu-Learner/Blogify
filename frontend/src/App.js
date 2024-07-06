@@ -4,25 +4,28 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Register from './pages/Register';
 import FullBlog from './components/FullBlog';
+import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <BrowserRouter>
+    <UserContextProvider>
+      <BrowserRouter>
 
-      <Navbar />
-      <div className="flex w-full justify-center">
-        <div className="flex max-w-screen-lg w-full py-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/blog/:blogId" element={<FullBlog />} />
-          </Routes>
+        <Navbar />
+        <div className="flex w-full justify-center">
+          <div className="flex max-w-screen-lg w-full py-6 px-3">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/blog/:blogId" element={<FullBlog />} />
+            </Routes>
+          </div>
+
         </div>
 
-      </div>
-
-    </BrowserRouter>
+      </BrowserRouter>
+    </UserContextProvider>
   );
 }
 

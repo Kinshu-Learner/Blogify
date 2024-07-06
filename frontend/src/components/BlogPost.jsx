@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const BlogPost = () => {
     return (
         <Link to={"/blog/:id"} className='w-full flex'>
-            <div className="flex p-4 flex-col items-center justify-center rounded-lg border border-blue-700 border-opacity-30 w-full">
+            <div className="flex p-4 flex-col items-center justify-center rounded-lg w-full hover:bg-gray-100 duration-200 bg-blue-700 bg-opacity-15">
 
                 <div className="text-xl font-semibold">Single Blog Random Title of the Blog</div>
 

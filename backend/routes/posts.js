@@ -1,23 +1,38 @@
 import express from "express";
 import verifyToken from "../middleware/authMiddleware.js";
 import Post from "../models/Post.js";
+import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
 // TODO: add express validator
 
-router.post("/", verifyToken, async (req, res) => {
-    const { title, summary, content } = req.body;
+router.post("/",
+    verifyToken,
+    [
+        body('title', "Enter a valid title").exists(),
+        body('summary', "Summary should not be more than 400 characters").isLength({ max: 400 }),
+        body('content', "Content should not be empty").exists()
+    ],
+    async (req, res) => {
 
-    const postDoc = await Post.create({
-        title,
-        summary,
-        content,
-        author: req.Id
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        const { title, summary, content } = req.body;
+
+        const postDoc = await Post.create({
+            title,
+            summary,
+            content,
+            author: req.Id
+        })
+
+        res.json(postDoc);
     })
-
-    res.json(postDoc);
-})
 
 router.get("/", async (req, res) => {
     const posts = await Post.find()

@@ -12,6 +12,13 @@ const CreatePost = () => {
     const [redirect, setRedirect] = useState(false);
 
     const handleCreatePost = async (e) => {
+
+        const textContent = content.replace(/<[^>]*>?/gm, '').trim();
+        if (!title.trim() || !summary.trim() || !textContent) {
+            alert('Please fill in all the fields correctly.');
+            return;
+        }
+
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);
@@ -70,8 +77,9 @@ const CreatePost = () => {
                     className='focus:outline-none border focus:border-blue-700 border-opacity-20 py-1 px-2 rounded-md' />
 
                 <ReactQuill
-                    value={content}
+                    value={content || ''}
                     required
+                    minlength={1}
                     placeholder='Content'
                     onChange={(newValue) => { setContent(newValue) }}
                 />

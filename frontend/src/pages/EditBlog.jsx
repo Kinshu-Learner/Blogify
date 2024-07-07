@@ -30,6 +30,12 @@ const CreatePost = () => {
     const handleUpdatePost = async (e) => {
         e.preventDefault();
 
+        const textContent = content.replace(/<[^>]*>?/gm, '').trim();
+        if (!title.trim() || !summary.trim() || !textContent) {
+            alert('Please fill in all the fields correctly.');
+            return;
+        }
+
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);

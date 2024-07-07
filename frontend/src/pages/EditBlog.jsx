@@ -16,7 +16,7 @@ const CreatePost = () => {
     useEffect(() => {
 
         const fetchPost = async () => {
-            const response = await axios.get(`http://localhost:7000/api/posts/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${id}`);
 
             setTitle(response.data.title);
             setSummary(response.data.summary);
@@ -42,7 +42,7 @@ const CreatePost = () => {
         data.set('content', content);
 
         try {
-            const response = await axios.put(`http://localhost:7000/api/posts/${id}`, data, {
+            const response = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${id}`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

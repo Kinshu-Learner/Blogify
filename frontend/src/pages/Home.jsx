@@ -9,7 +9,7 @@ const Home = () => {
     useEffect(() => {
 
         const fetchAllPosts = async () => {
-            const response = await axios.get('http://localhost:7000/api/posts');
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/posts`);
 
             if (response.status === 200) {
                 setPosts(response.data);

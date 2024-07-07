@@ -21,7 +21,7 @@ const FullBlog = () => {
     useEffect(() => {
 
         const fetchBlog = async () => {
-            const response = await axios.get(`http://localhost:7000/api/posts/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${id}`);
 
             setBlogInfo(response.data);
         }
@@ -33,7 +33,7 @@ const FullBlog = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.delete(`http://localhost:7000/api/posts/${id}`,
+            const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${id}`,
                 {
                     withCredentials: true
                 }

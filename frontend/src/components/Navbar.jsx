@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TbDeviceIpadPlus } from 'react-icons/tb';
 import { UserContext } from '../contexts/UserContext';
@@ -12,7 +12,7 @@ const Navbar = () => {
 
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:7000/api/auth/profile', {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/auth/profile`, {
                     withCredentials: true
                 });
 
@@ -30,7 +30,7 @@ const Navbar = () => {
     }, [])
 
     const logout = async () => {
-        await axios.post('http://localhost:7000/api/auth/logout', {},
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`, {},
             {
                 withCredentials: true
             }

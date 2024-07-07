@@ -5,8 +5,6 @@ import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
-// TODO: add express validator
-
 router.post("/",
     verifyToken,
     [

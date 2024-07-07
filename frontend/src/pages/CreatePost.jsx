@@ -27,7 +27,7 @@ const CreatePost = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:7000/api/posts",
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/posts`,
                 data, {
                 headers: {
                     'Content-Type': 'application/json',

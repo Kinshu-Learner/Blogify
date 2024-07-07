@@ -56,4 +56,27 @@ router.put("/:id", verifyToken, async (req, res) => {
     res.json(postDoc);
 });
 
+router.delete("/:id", verifyToken, async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const postDoc = await Post.findById(id);
+        if (!postDoc) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        const isAuthor = postDoc.author.toString() === req.Id.toString();
+        if (!isAuthor) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        await Post.findByIdAndDelete(id);
+
+        res.json({ message: "Post deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Server error" });
+    }
+
+});
+
 export default router;

@@ -7,9 +7,9 @@ const BlogPost = ({ _id, title, summary, createdAt, author }) => {
         <Link to={`/blog/${_id}`} className='w-full flex'>
             <div className="flex p-4 flex-col items-center justify-center rounded-lg w-full hover:bg-gray-100 duration-200 bg-blue-700 bg-opacity-15">
 
-                <div className="text-xl font-semibold">{title}</div>
+                <div className="text-2xl font-semibold">{title}</div>
 
-                <div className="flex justify-between w-full text-center text-sm py-3">
+                <div className="flex justify-between w-full text-center text-sm py-5">
                     <div className="font-medium">Author:&nbsp;
                         <span className='font-normal'>
                             {author.name}

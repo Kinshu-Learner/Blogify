@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
 import axios from 'axios';
+import { UserContext } from '../contexts/UserContext';
 
 const Register = () => {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [redirect, setRedirect] = useState(false);
+    const { setUserInfo } = useContext(UserContext);
 
     const handleRegister = async (e) => {
 
@@ -22,6 +25,7 @@ const Register = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                withCredentials: true
             });
 
             if (response.status !== 200) {
@@ -29,6 +33,9 @@ const Register = () => {
             }
             else {
                 alert("Registration successful");
+                const userInformation = await response.data;
+                setUserInfo(userInformation);
+                setRedirect(true);
             }
 
         } catch (error) {
@@ -36,6 +43,10 @@ const Register = () => {
             alert("Registration failed due to an error");
         }
 
+    }
+
+    if (redirect) {
+        return <Navigate to={'/'} />
     }
 
     return (

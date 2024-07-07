@@ -31,12 +31,16 @@ router.post("/register",
             const secPass = await bcrypt.hash(password, salt);
             const userDoc = await User.create({ name, email, password: secPass });
 
-            res.json(userDoc);
+            const authtoken = jwt.sign({ Id: userDoc._id }, process.env.JWT_SECRET);
+
+            res.cookie("authToken", authtoken).json({
+                Id: userDoc._id,
+                name: userDoc.name,
+            });
 
         } catch (e) {
             res.status(400).json({ e });
         }
-
 
     }
 );
